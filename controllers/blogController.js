@@ -94,7 +94,7 @@ module.exports = {
                 }
             })
 
-            if (!checkVerif.isVerif) throw { message: "Account not verified" }
+            if (checkVerif.isVerif === false) throw { message: "Account not verified" }
             
             const t = await sequelize.transaction()
 
