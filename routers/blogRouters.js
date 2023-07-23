@@ -10,7 +10,7 @@ router.post('/createblog', verifyToken, multerUpload('./Public/Blog', 'Blog').si
 router.post('/likeblog', verifyToken, blogController.likeBlog)
 router.get('/paglike', verifyToken, blogController.getLikedBlog)
 router.get('/paguser', verifyToken, blogController.getUserBlog)
-router.patch('/deleteblog', verifyToken, blogController.deleteBlog)
+router.delete('/deleteblog', verifyToken, blogController.deleteBlog)
 router.get('/getcategory', blogController.getCategory)
 router.get('/:blogId', blogController.getBlogById)
 

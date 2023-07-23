@@ -189,6 +189,8 @@ module.exports = {
     },
     changePic: async (req, res) => {
         try {
+            if (!req.file) throw { message: "Please choose your profile image" }
+
             await user.update({ imageProfile: req.file.filename }, {
                 where: {
                     id: req.user.id
@@ -200,7 +202,23 @@ module.exports = {
                 message: "Successfuly change profile picture"
             })
         } catch (err) {
+            console.log(err);
             res.status(400).send(err)
+        }
+    },
+    removeProfilePic: async (req, res) => {
+        try {
+            await user.update({ imageProfile: null }, {
+                where: {
+                    id: req.user.id
+                }
+            })
+
+            res.status(200).send({
+                message: "Profile picture removed"
+            })
+        } catch (err) {
+            res.status(400).send(err);
         }
     }
 }

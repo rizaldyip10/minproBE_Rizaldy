@@ -173,6 +173,7 @@ module.exports = {
             const sort = req.query.sort || 'DESC'
             const sortBy = req.query.sortBy || `createdAt`
             const result = await like.findAll({
+                attributes: ['blogId', 'UserId'],
                 limit,
                 offset: limit * (page - 1),
                 where: {
@@ -181,8 +182,8 @@ module.exports = {
                 include: [
                     {
                         model: blog, 
-                        attributes: ['title', 'content', 'imgBlog'], 
-                        include: [{model: dbcategory}], 
+                        attributes: ['title', 'content', 'imgBlog', 'createdAt'], 
+                        include: [{ model: dbcategory }, { model: User, attributes: ['username', 'imageProfile'] }], 
                         where: {isDeleted: false}
                     }],
                 order: [
@@ -191,8 +192,15 @@ module.exports = {
             })
             const count = await like.count({
                 where: {
-                    UserId: req.user.id
-                }
+                    UserId: req.user.id,
+                },
+                include: [
+                    {
+                        model: blog, 
+                        attributes: ['title', 'content', 'imgBlog', 'createdAt'], 
+                        include: [{ model: dbcategory }, { model: User, attributes: ['username', 'imageProfile'] }], 
+                        where: {isDeleted: false}
+                    }]
             })
             res.status(200).send({
                 total: count,
@@ -227,7 +235,8 @@ module.exports = {
 
             const count = await blog.count({
                 where: {
-                    UserId: req.user.id
+                    UserId: req.user.id,
+                    isDeleted: false
                 }
             })
 

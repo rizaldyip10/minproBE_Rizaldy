@@ -10,6 +10,7 @@ router.patch('/changeusername', verifyToken, checkChangeUsername, userController
 router.patch('/changephone', verifyToken, checkChangePhone, userController.changePhone)
 router.patch('/changeemail', verifyToken, checkChangeEmail, userController.changeEmail)
 router.patch('/changepic', verifyToken, multerUpload('./Public/Avatar', "Avatar").single('file'), userController.changePic)
+router.delete('/removepic', verifyToken, userController.removeProfilePic)
 
 
 module.exports = router

@@ -12,6 +12,7 @@ module.exports = {
 
             let verifiedUser = jwt.verify(token, process.env.TOKEN_KEY)
             req.user = verifiedUser
+            console.log(req.user);
             next()
         } catch (error) {
             res.status(400).send(error)
