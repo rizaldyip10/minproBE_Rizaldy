@@ -104,12 +104,6 @@ module.exports = {
                 }
             })
             if (currentPhone !== checkPhone.phone) throw { message: "Incorrect phone number" }
-            const isPhoneExist = await user.findOne({
-                where: {
-                    phone
-                }
-            })
-            if (isPhoneExist) throw { message: "Phone number already taken" }
 
             const result = await user.update({phone: phone}, {
                 where: {

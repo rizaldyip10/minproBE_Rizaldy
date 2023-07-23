@@ -87,6 +87,14 @@ module.exports = {
     createBlog: async (req, res) => {
         try {
             const { title, content, videoURL, country, keywords, category } = req.body
+
+            const checkVerif = await User.findOne({
+                where: {
+                    id: req.user.id
+                }
+            })
+
+            if (!checkVerif.isVerif) throw { message: "Account not verified" }
             
             const t = await sequelize.transaction()
 
