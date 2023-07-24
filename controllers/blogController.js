@@ -288,7 +288,6 @@ module.exports = {
                     "title",
                     "content",
                     "imgBlog",
-                    "keywords",
                     "country",
                     "videoURL",
                     [
@@ -301,7 +300,13 @@ module.exports = {
                     "CategoryId",
                     "UserId",
                   ],
-                include: [{model: User, attributes: ['username', 'imageProfile']}, {model: dbcategory}, {model: like}]
+                include: [
+                    {model: User, attributes: ['username', 'imageProfile']},
+                    {model: dbcategory},
+                    {model: like, attributes: ['id'],
+                    include: [
+                        { model: User, attributes: ['username'] }
+                    ]}]
             })
             
             res.status(200).send({

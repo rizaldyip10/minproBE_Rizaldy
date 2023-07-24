@@ -83,6 +83,9 @@ module.exports = {
     },
     verify: async (req, res) => {
         try {
+
+            if (req.user.id) throw { message: "invalid token" }
+            
             const checkVerify = await user.findOne({
                 where: {
                     username: req.user.username

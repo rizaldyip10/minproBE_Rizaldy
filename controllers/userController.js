@@ -16,6 +16,7 @@ module.exports = {
                     id: req.user.id
                 }
             })
+
             const isValid = await bcrypt.compare(currentPassword, checkPass.password)
             if (!isValid) throw { message: "Incorrect current password" }
             if (password !== confirmPassword) throw { message: "Password did not match" }
@@ -60,6 +61,7 @@ module.exports = {
                     id: req.user.id
                 }
             })
+
             if (currentUsername !== checkUsername.username) throw { message: "Incorrect username" }
             const isUsernameExist = await user.findOne({
                 where: {
